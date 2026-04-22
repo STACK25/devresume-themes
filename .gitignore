@@ -1,5 +1,6 @@
 # Go build artifacts
 cli/cli
+cli/devresume-themes
 cli/*.exe
 
 # OS / editor
