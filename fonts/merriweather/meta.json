@@ -1,0 +1,11 @@
+{
+  "id": "merriweather",
+  "label": "Merriweather",
+  "category": "serif",
+  "family": "Merriweather",
+  "fallback": "Georgia, 'Times New Roman', serif",
+  "weights": [
+    { "file": "Merriweather-Regular.woff2", "weight": 400, "style": "normal" },
+    { "file": "Merriweather-Bold.woff2",    "weight": 700, "style": "normal" }
+  ]
+}

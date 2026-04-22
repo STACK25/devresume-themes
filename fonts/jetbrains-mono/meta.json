@@ -1,0 +1,11 @@
+{
+  "id": "jetbrains-mono",
+  "label": "JetBrains Mono",
+  "category": "monospace",
+  "family": "JetBrains Mono",
+  "fallback": "'SF Mono', Monaco, Consolas, 'Courier New', monospace",
+  "weights": [
+    { "file": "JetBrainsMono-Regular.woff2",  "weight": 400, "style": "normal" },
+    { "file": "JetBrainsMono-SemiBold.woff2", "weight": 600, "style": "normal" }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "ibm-plex-sans",
+  "label": "IBM Plex Sans",
+  "category": "sans-serif",
+  "family": "IBM Plex Sans",
+  "fallback": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+  "weights": [
+    { "file": "IBMPlexSans-Regular.woff2",  "weight": 400, "style": "normal" },
+    { "file": "IBMPlexSans-Medium.woff2",   "weight": 500, "style": "normal" },
+    { "file": "IBMPlexSans-SemiBold.woff2", "weight": 600, "style": "normal" },
+    { "file": "IBMPlexSans-Bold.woff2",     "weight": 700, "style": "normal" }
+  ]
+}
