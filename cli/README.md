@@ -8,17 +8,17 @@ From the repo root:
 
 ```bash
 cd cli
-go run . --theme classic-navy
+go run .
 ```
 
-Opens a live-reloading preview at http://localhost:7171.
+Opens a live-reloading preview at http://localhost:7171. The theme and font come from the YAML's `theme:` and `font:` fields; change them and the browser reloads.
 
 ## Flags
 
 | Flag | Default | Description |
 |------|---------|-------------|
 | `--yaml` | `../_examples/sample.yaml` | YAML resume file to render |
-| `--theme` | `classic-navy` | `template-variant` (e.g. `modern-teal`, `technical-dark`) |
+| `--theme` | *empty* | Override the YAML's `theme:` field (format `template-variant`, e.g. `modern-teal`). Leave empty to use the YAML. |
 | `--port` | `7171` | HTTP port |
 | `--themes-dir` | `..` | Directory containing template folders and `fonts/` |
 
@@ -26,11 +26,10 @@ Opens a live-reloading preview at http://localhost:7171.
 
 The CLI watches:
 - The YAML file passed via `--yaml`
-- The selected template's folder (`<themes-dir>/<template>/`)
-- Its `themes/` subdirectory
+- Every template folder under `<themes-dir>/` (and its `themes/` subdirectory)
 - The `<themes-dir>/fonts/` directory and each font subdirectory
 
-Any write to these triggers a browser reload via Server-Sent Events. Font cache is rebuilt automatically on font edits.
+Any write to these triggers a browser reload via Server-Sent Events. Font cache is rebuilt automatically on font edits. Because all template folders are watched, you can switch themes by editing the YAML's `theme:` field; the preview updates without a CLI restart.
 
 Note: on macOS, `touch` without content change produces a Chmod-only event that is intentionally ignored. Editor saves (which write content) trigger reload as expected.
 
@@ -43,5 +42,5 @@ Note: on macOS, `touch` without content change produces a Chmod-only event that 
 ```bash
 cd cli
 go build -o devresume-theme .
-./devresume-theme --theme modern-teal
+./devresume-theme
 ```
