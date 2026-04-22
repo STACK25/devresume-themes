@@ -1,0 +1,8 @@
+# Go build artifacts
+cli/cli
+cli/*.exe
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/

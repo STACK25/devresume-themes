@@ -1,0 +1,21 @@
+:root {
+  /* Sidebar Colors (Deep Burgundy) */
+  --bg-sidebar: #7c2d4b;
+  --text-sidebar: #f5e0e8;
+  --text-sidebar-heading: #ffffff;
+  --text-sidebar-muted: #d4a0b5;
+  --border-sidebar: rgba(255, 255, 255, 0.15);
+  --accent-color: #a60327;
+
+  /* Main Content Colors (Off-White) */
+  --bg-main: #fefefe;
+  --text-main: #1f1f1f;
+  --text-heading: #7c2d4b;
+  --text-muted: #64748b;
+  --border-main: #fecdd3;
+
+  /* Tag/Badge Colors */
+  --bg-tag: #fff8fa;
+  --text-tag: #7c2d4b;
+  --border-tag: #fecdd3;
+}

@@ -1,0 +1,21 @@
+:root {
+  /* Sidebar Colors (Dark Teal) */
+  --bg-sidebar: #1e5a5a;
+  --text-sidebar: #e8f4f4;
+  --text-sidebar-heading: #ffffff;
+  --text-sidebar-muted: #b8d8d8;
+  --border-sidebar: rgba(255, 255, 255, 0.2);
+  --accent-color: #d4af37;
+
+  /* Main Content Colors (White) */
+  --bg-main: #ffffff;
+  --text-main: #2d3748;
+  --text-heading: #1a202c;
+  --text-muted: #718096;
+  --border-main: #e2e8f0;
+
+  /* Tag/Badge Colors */
+  --bg-tag: #f7fafc;
+  --text-tag: #2d3748;
+  --border-tag: #cbd5e0;
+}

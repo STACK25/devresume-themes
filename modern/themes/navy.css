@@ -1,0 +1,21 @@
+:root {
+  /* Sidebar Colors (Deep Navy) */
+  --bg-sidebar: #001f54;
+  --text-sidebar: #c2d6f0;
+  --text-sidebar-heading: #ffffff;
+  --text-sidebar-muted: #8baac8;
+  --border-sidebar: rgba(255, 255, 255, 0.15);
+  --accent-color: #003d82;
+
+  /* Main Content Colors (White) */
+  --bg-main: #ffffff;
+  --text-main: #1a1f36;
+  --text-heading: #001f54;
+  --text-muted: #64748b;
+  --border-main: #cbd5e1;
+
+  /* Tag/Badge Colors */
+  --bg-tag: #f0f4f8;
+  --text-tag: #001f54;
+  --border-tag: #cbd5e1;
+}

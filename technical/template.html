@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume - {{.Name}}</title>
+  <style>
+    {{FONT_CSS}}
+    {{THEME_CSS}}
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :host {
+      display: block;
+      background: var(--bg-primary);
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: var(--bg-primary);
+    }
+
+    :host, body {
+      font-family: var(--font-resume);
+    }
+
+    body {
+      background: var(--bg-primary);
+      color: var(--color-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      orphans: 3;
+      widows: 3;
+    }
+
+    .sheet {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 56px 64px;
+    }
+
+    @page {
+      margin: 40px;
+      size: A4;
+      background: var(--bg-primary);
+    }
+
+    @media print {
+      .sheet { padding: 0; }
+    }
+
+    /* Template-internal mono font stack — independent of user's --font-resume.
+       Used for section titles, tags, metadata, dates. Body text stays sans. */
+    .mono,
+    .section-title,
+    .duration,
+    .certification-date,
+    .education-dates,
+    .tech-tag,
+    .skill-tag,
+    .contact {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Source Code Pro', 'SF Mono', Monaco, Consolas, monospace;
+    }
+
+    /* ====== Header ====== */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 28px;
+      margin-bottom: 40px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .header-content { flex: 1; }
+
+    h1 {
+      color: var(--color-text);
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+    h1::before {
+      content: "$ ";
+      color: var(--color-accent);
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-weight: 400;
+    }
+    .title {
+      color: var(--color-muted);
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+
+    .contact {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 20px;
+      font-size: 11px;
+      color: var(--color-muted);
+    }
+    .contact > span { display: inline-flex; align-items: center; }
+
+    .profile-image {
+      width: 96px;
+      height: 96px;
+      border-radius: 6px;
+      object-fit: cover;
+      border: 2px solid var(--color-accent);
+      flex-shrink: 0;
+    }
+
+    /* ====== Sections ====== */
+    .section {
+      margin-bottom: 32px;
+    }
+
+    .section-title {
+      color: var(--color-accent);
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: lowercase;
+      letter-spacing: 0.02em;
+      margin-bottom: 16px;
+      padding-bottom: 6px;
+      border-bottom: 1px dashed var(--border-color);
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+    .section-title::before {
+      content: "> ";
+      color: var(--color-accent);
+    }
+
+    /* ====== Text ====== */
+    .text-content {
+      white-space: pre-line;
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--color-text);
+    }
+
+    /* ====== Experience / Projects / Certifications / Education ====== */
+    .experience-item,
+    .project-item,
+    .certification-item,
+    .education-item {
+      margin-bottom: 22px;
+      padding-left: 16px;
+      border-left: 2px solid var(--border-color);
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .experience-item:last-child,
+    .project-item:last-child,
+    .certification-item:last-child,
+    .education-item:last-child { margin-bottom: 0; }
+
+    .experience-header,
+    .certification-header,
+    .education-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 2px;
+    }
+
+    .position, .project-title, .certification-name, .education-degree {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--color-text);
+    }
+    .company, .certification-issuer, .education-institution {
+      font-size: 12px;
+      color: var(--color-accent);
+      margin-bottom: 8px;
+    }
+    .duration, .certification-date, .education-dates {
+      font-size: 11px;
+      color: var(--color-muted);
+      white-space: nowrap;
+    }
+    .duration::before,
+    .certification-date::before,
+    .education-dates::before { content: "["; color: var(--color-muted-2); }
+    .duration::after,
+    .certification-date::after,
+    .education-dates::after { content: "]"; color: var(--color-muted-2); }
+
+    .description,
+    .project-description,
+    .education-description {
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--color-text);
+      white-space: pre-line;
+      margin-bottom: 10px;
+    }
+
+    /* ====== Tech tags (code-block style) ====== */
+    .technologies {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .tech-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      font-size: 11px;
+      background: var(--bg-code);
+      color: var(--color-text);
+      border: 1px solid var(--border-color);
+      border-radius: 3px;
+    }
+
+    .certification-id {
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 11px;
+      color: var(--color-muted);
+    }
+
+    /* ====== Skills ====== */
+    .skills-group {
+      margin-bottom: 14px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .skills-group:last-child { margin-bottom: 0; }
+    .skills-group-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-accent);
+      margin-bottom: 6px;
+    }
+    .skills-group-title::before {
+      content: "# ";
+      color: var(--color-muted);
+    }
+    .skills-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .skill-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      font-size: 11px;
+      background: var(--bg-code);
+      color: var(--color-text);
+      border: 1px solid var(--border-color);
+      border-radius: 3px;
+    }
+
+    /* ====== Languages ====== */
+    .languages-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      column-gap: 24px;
+      row-gap: 4px;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .language-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .language-name {
+      color: var(--color-text);
+    }
+    .language-sep {
+      color: var(--color-muted-2);
+    }
+    .language-level {
+      color: var(--color-accent);
+    }
+
+    /* ====== Section break helper ====== */
+    .section-no-break { page-break-inside: avoid; break-inside: avoid; }
+
+    /* ====== Watermark ====== */
+    .watermark {
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      text-align: center;
+      font-size: 10px;
+      color: var(--color-muted);
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px dashed var(--border-color);
+    }
+    .watermark::before { content: "// "; color: var(--color-muted-2); }
+  </style>
+</head>
+<body>
+  <div class="sheet">
+    <header>
+      <div class="header-content">
+        <h1>{{.Name}}</h1>
+        <div class="title">{{.Title}}</div>
+        <div class="contact">
+          {{if .Contact.Email}}<span>{{.Contact.Email}}</span>{{end}}
+          {{if .Contact.Phone}}<span>{{.Contact.Phone}}</span>{{end}}
+          {{if .Contact.Location}}<span>{{.Contact.Location}}</span>{{end}}
+          {{if .Contact.Github}}<span>{{.Contact.Github}}</span>{{end}}
+          {{if .Contact.Linkedin}}<span>{{.Contact.Linkedin}}</span>{{end}}
+          {{if .Contact.Xing}}<span>{{.Contact.Xing}}</span>{{end}}
+          {{if .Contact.Website}}<span>{{.Contact.Website}}</span>{{end}}
+          {{if .Contact.Twitter}}<span>{{.Contact.Twitter}}</span>{{end}}
+        </div>
+      </div>
+      {{if .ProfileImage}}
+      <img src="{{.ProfileImage}}" alt="Profile" class="profile-image" />
+      {{end}}
+    </header>
+
+    {{range .Sections}}
+    <section class="section{{if $.SectionBreaks}} section-no-break{{end}}">
+      <div class="section-title">{{.Title}}</div>
+
+      {{if eq .Type "text"}}
+      <p class="text-content">{{.Content}}</p>
+      {{end}}
+
+      {{if eq .Type "experience"}}
+      {{range .Items}}
+      <div class="experience-item">
+        <div class="experience-header">
+          <h3 class="position">{{.Position}}</h3>
+          <span class="duration">{{.Start}} → {{if .End}}{{.End}}{{else}}present{{end}}</span>
+        </div>
+        <div class="company">{{.Company}}</div>
+        {{if .Description}}<div class="description">{{.Description}}</div>{{end}}
+        {{if .Technologies}}
+        <div class="technologies">
+          {{range .Technologies}}<span class="tech-tag">{{.}}</span>{{end}}
+        </div>
+        {{end}}
+      </div>
+      {{end}}
+      {{end}}
+
+      {{if eq .Type "skills"}}
+      {{range .Groups}}
+      <div class="skills-group">
+        <div class="skills-group-title">{{.Category}}</div>
+        <div class="skills-items">
+          {{range .Items}}<span class="skill-tag">{{.}}</span>{{end}}
+        </div>
+      </div>
+      {{end}}
+      {{end}}
+
+      {{if eq .Type "projects"}}
+      {{range .Items}}
+      <div class="project-item">
+        <h3 class="project-title">{{.Name}}</h3>
+        {{if .Description}}<div class="project-description">{{.Description}}</div>{{end}}
+        {{if .Technologies}}
+        <div class="technologies">
+          {{range .Technologies}}<span class="tech-tag">{{.}}</span>{{end}}
+        </div>
+        {{end}}
+      </div>
+      {{end}}
+      {{end}}
+
+      {{if eq .Type "certifications"}}
+      {{range .Items}}
+      <div class="certification-item">
+        <div class="certification-header">
+          <h3 class="certification-name">{{.Name}}</h3>
+          {{if .Date}}<span class="certification-date">{{.Date}}</span>{{end}}
+        </div>
+        {{if .Issuer}}<div class="certification-issuer">{{.Issuer}}</div>{{end}}
+        {{if .CredentialID}}<div class="certification-id">id: {{.CredentialID}}</div>{{end}}
+      </div>
+      {{end}}
+      {{end}}
+
+      {{if eq .Type "education"}}
+      {{range .Items}}
+      <div class="education-item">
+        <div class="education-header">
+          {{if .Degree}}<h3 class="education-degree">{{.Degree}}{{if .Field}} in {{.Field}}{{end}}</h3>{{end}}
+          {{if or .Start .End}}<span class="education-dates">{{.Start}}{{if .End}} → {{.End}}{{end}}</span>{{end}}
+        </div>
+        {{if .Institution}}<div class="education-institution">{{.Institution}}</div>{{end}}
+        {{if .Description}}<div class="education-description">{{.Description}}</div>{{end}}
+      </div>
+      {{end}}
+      {{end}}
+
+      {{if eq .Type "languages"}}
+      <div class="languages-list">
+        {{range .Languages}}
+        <div class="language-row">
+          <span class="language-name">{{.Name}}</span>
+          <span class="language-sep">::</span>
+          <span class="language-level">{{.Level}}</span>
+        </div>
+        {{end}}
+      </div>
+      {{end}}
+
+    </section>
+    {{end}}
+
+    {{if not .HideWatermark}}
+    <div class="watermark">
+      Generated with devResume.io · Resume as Code for Tech Professionals
+    </div>
+    {{end}}
+  </div>
+</body>
+</html>

@@ -1,0 +1,69 @@
+name: Alex Beispiel
+title: Senior Software Engineer
+profile_image: ""
+theme: classic-navy
+font: inter
+
+contact:
+  email: alex@example.com
+  location: Berlin, Germany
+  github: github.com/alexbeispiel
+  linkedin: linkedin.com/in/alexbeispiel
+  website: alex.dev
+
+sections:
+  - type: text
+    title: Summary
+    content: |
+      Backend-focused engineer with 8 years building scalable services in Go
+      and Python. Enjoys clean architecture, observability, and mentoring.
+
+  - type: experience
+    title: Experience
+    items:
+      - company: TechCorp
+        position: Senior Software Engineer
+        start: "2022"
+        end: "present"
+        description: |
+          Lead engineer on the billing platform. Migrated legacy monolith
+          to event-driven microservices, reducing invoice latency by 70%.
+        technologies: [Go, PostgreSQL, Kafka, Kubernetes]
+      - company: StartupXYZ
+        position: Software Engineer
+        start: "2019"
+        end: "2022"
+        description: Built the core payments pipeline from scratch.
+        technologies: [Python, Django, Redis]
+
+  - type: skills
+    title: Skills
+    groups:
+      - category: Languages
+        items: [Go, Python, TypeScript, SQL]
+      - category: Infrastructure
+        items: [Kubernetes, Docker, Terraform, AWS]
+
+  - type: education
+    title: Education
+    items:
+      - institution: TU Berlin
+        degree: M.Sc.
+        field: Computer Science
+        start: "2014"
+        end: "2017"
+
+  - type: certifications
+    title: Certifications
+    items:
+      - name: AWS Certified Solutions Architect
+        issuer: Amazon Web Services
+        date: "2023"
+
+  - type: languages
+    title: Languages
+    languages:
+      - name: German
+        level: Native
+      - name: English
+        level: Fluent
