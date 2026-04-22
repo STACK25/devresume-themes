@@ -15,9 +15,9 @@ import (
 var reloadJS string
 
 type PreviewServer struct {
-	yamlPath  string
-	themeName string
-	themesDir string
+	yamlPath     string
+	themeOverride string // if non-empty, overrides the theme from YAML
+	themesDir    string
 
 	mu        sync.RWMutex
 	fontCache map[string]string
@@ -27,14 +27,14 @@ type PreviewServer struct {
 	subscribers map[chan struct{}]struct{}
 }
 
-func NewPreviewServer(yamlPath, themeName, themesDir string, fontCache map[string]string, reload <-chan struct{}) *PreviewServer {
+func NewPreviewServer(yamlPath, themeOverride, themesDir string, fontCache map[string]string, reload <-chan struct{}) *PreviewServer {
 	s := &PreviewServer{
-		yamlPath:    yamlPath,
-		themeName:   themeName,
-		themesDir:   themesDir,
-		fontCache:   fontCache,
-		reload:      reload,
-		subscribers: make(map[chan struct{}]struct{}),
+		yamlPath:      yamlPath,
+		themeOverride: themeOverride,
+		themesDir:     themesDir,
+		fontCache:     fontCache,
+		reload:        reload,
+		subscribers:   make(map[chan struct{}]struct{}),
 	}
 	go s.fanout()
 	return s
@@ -94,11 +94,21 @@ func (s *PreviewServer) renderOnce() (string, error) {
 	}
 	data.HideWatermark = true
 
+	// Theme source of truth is the YAML. A non-empty --theme flag overrides it
+	// (useful for quickly previewing a theme without editing the yaml).
+	theme := data.Theme
+	if s.themeOverride != "" {
+		theme = s.themeOverride
+	}
+	if theme == "" {
+		return "", fmt.Errorf("no theme specified (set 'theme:' in yaml or pass --theme)")
+	}
+
 	s.mu.RLock()
 	cache := s.fontCache
 	s.mu.RUnlock()
 
-	html, err := RenderTemplate(s.themeName, s.themesDir, cache, data)
+	html, err := RenderTemplate(theme, s.themesDir, cache, data)
 	if err != nil {
 		return "", err
 	}

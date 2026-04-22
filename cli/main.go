@@ -9,10 +9,10 @@ import (
 
 func main() {
 	var (
-		yamlPath  = flag.String("yaml", "../_examples/sample.yaml", "Path to resume YAML file")
-		themeName = flag.String("theme", "classic-navy", "Theme in format template-variant")
-		port      = flag.Int("port", 7171, "HTTP port for preview server")
-		themesDir = flag.String("themes-dir", "..", "Directory containing template folders and fonts/")
+		yamlPath      = flag.String("yaml", "../_examples/sample.yaml", "Path to resume YAML file")
+		themeOverride = flag.String("theme", "", "Override theme from YAML (format: template-variant, e.g. classic-navy). If empty, use YAML's theme field.")
+		port          = flag.Int("port", 7171, "HTTP port for preview server")
+		themesDir     = flag.String("themes-dir", "..", "Directory containing template folders and fonts/")
 	)
 	flag.Parse()
 
@@ -22,17 +22,20 @@ func main() {
 	}
 	log.Printf("loaded %d font(s)", len(fontCache))
 
-	reload, err := WatchPaths(*yamlPath, *themesDir, *themeName)
+	reload, err := WatchPaths(*yamlPath, *themesDir)
 	if err != nil {
 		log.Fatalf("start watcher: %v", err)
 	}
 
-	srv := NewPreviewServer(*yamlPath, *themeName, *themesDir, fontCache, reload)
+	srv := NewPreviewServer(*yamlPath, *themeOverride, *themesDir, fontCache, reload)
 
 	addr := fmt.Sprintf("localhost:%d", *port)
-	log.Printf("devresume-theme preview: http://%s  (yaml=%s theme=%s)", addr, *yamlPath, *themeName)
-	log.Printf("watching yaml, %s/, themes/, and fonts/; edit any file to trigger reload",
-		*themeName)
+	if *themeOverride != "" {
+		log.Printf("devresume-theme preview: http://%s  (yaml=%s, theme override=%s)", addr, *yamlPath, *themeOverride)
+	} else {
+		log.Printf("devresume-theme preview: http://%s  (yaml=%s, theme from yaml)", addr, *yamlPath)
+	}
+	log.Printf("watching yaml, all template folders, and fonts/; edit any file to trigger reload")
 	if err := http.ListenAndServe(addr, srv.Routes()); err != nil {
 		log.Fatal(err)
 	}

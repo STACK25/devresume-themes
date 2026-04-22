@@ -7,6 +7,7 @@ type ResumeData struct {
 	Contact       ContactInfo `yaml:"contact"`
 	Sections      []Section   `yaml:"sections"`
 	SectionBreaks bool        `yaml:"section_breaks"`
+	Theme         string      `yaml:"theme"`
 	Font          string      `yaml:"font"`
 	HideWatermark bool        // Always true in CLI preview
 }

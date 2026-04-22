@@ -4,29 +4,44 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"strings"
 	"time"
 
 	"github.com/fsnotify/fsnotify"
 )
 
-// WatchPaths monitors the YAML file, the active template folder (+ themes/),
-// and the fonts/ tree. It coalesces bursts of filesystem events and sends a
-// single tick on the returned channel per burst.
-func WatchPaths(yamlPath, themesDir, themeName string) (<-chan struct{}, error) {
+// WatchPaths monitors the YAML file, every template folder (+ its themes/
+// subfolder), and the fonts/ tree. All template folders are watched so the
+// user can switch themes by editing the 'theme:' field in the YAML without
+// restarting the CLI. Events are coalesced via a 120ms debounce.
+func WatchPaths(yamlPath, themesDir string) (<-chan struct{}, error) {
 	w, err := fsnotify.NewWatcher()
 	if err != nil {
 		return nil, err
 	}
 
-	templateName := strings.SplitN(themeName, "-", 2)[0]
-	templateDir := filepath.Join(themesDir, templateName)
-	themesSubDir := filepath.Join(templateDir, "themes")
+	targets := []string{yamlPath}
+
+	// Every subdir of themesDir that contains a template.html is a template
+	// folder; watch it plus its themes/ subfolder.
+	if entries, err := os.ReadDir(themesDir); err == nil {
+		for _, e := range entries {
+			if !e.IsDir() {
+				continue
+			}
+			dir := filepath.Join(themesDir, e.Name())
+			if _, statErr := os.Stat(filepath.Join(dir, "template.html")); statErr != nil {
+				continue
+			}
+			targets = append(targets, dir)
+			themesSub := filepath.Join(dir, "themes")
+			if _, err := os.Stat(themesSub); err == nil {
+				targets = append(targets, themesSub)
+			}
+		}
+	}
+
 	fontsDir := FontsDir(themesDir)
-
-	targets := []string{yamlPath, templateDir, themesSubDir, fontsDir}
-
-	// Also watch each font subdir so we catch woff2/meta.json edits.
+	targets = append(targets, fontsDir)
 	if entries, err := os.ReadDir(fontsDir); err == nil {
 		for _, e := range entries {
 			if e.IsDir() {
