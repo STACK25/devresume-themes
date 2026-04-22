@@ -1,4 +1,4 @@
-# devresume-themes
+# devresume-theme
 
 Themes, HTML templates, and bundled fonts for [devResume.io](https://devresume.io), a free, open-source "resume as code" tool for tech professionals.
 

@@ -1,4 +1,4 @@
-# devresume-themes CLI
+# devresume-theme CLI
 
 Local preview tool for developing devResume themes. Renders with the real bundled fonts, so what you see matches production pixel-for-pixel.
 
@@ -42,6 +42,6 @@ Note: on macOS, `touch` without content change produces a Chmod-only event that 
 
 ```bash
 cd cli
-go build -o devresume-themes .
-./devresume-themes --theme modern-teal
+go build -o devresume-theme .
+./devresume-theme --theme modern-teal
 ```

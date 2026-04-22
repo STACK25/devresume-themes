@@ -30,7 +30,7 @@ func main() {
 	srv := NewPreviewServer(*yamlPath, *themeName, *themesDir, fontCache, reload)
 
 	addr := fmt.Sprintf("localhost:%d", *port)
-	log.Printf("devresume-themes preview: http://%s  (yaml=%s theme=%s)", addr, *yamlPath, *themeName)
+	log.Printf("devresume-theme preview: http://%s  (yaml=%s theme=%s)", addr, *yamlPath, *themeName)
 	log.Printf("watching yaml, %s/, themes/, and fonts/; edit any file to trigger reload",
 		*themeName)
 	if err := http.ListenAndServe(addr, srv.Routes()); err != nil {
