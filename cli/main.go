@@ -22,10 +22,17 @@ func main() {
 	}
 	log.Printf("loaded %d font(s)", len(fontCache))
 
-	srv := NewPreviewServer(*yamlPath, *themeName, *themesDir, fontCache)
+	reload, err := WatchPaths(*yamlPath, *themesDir, *themeName)
+	if err != nil {
+		log.Fatalf("start watcher: %v", err)
+	}
+
+	srv := NewPreviewServer(*yamlPath, *themeName, *themesDir, fontCache, reload)
 
 	addr := fmt.Sprintf("localhost:%d", *port)
 	log.Printf("devresume-themes preview: http://%s  (yaml=%s theme=%s)", addr, *yamlPath, *themeName)
+	log.Printf("watching yaml, %s/, themes/, and fonts/; edit any file to trigger reload",
+		*themeName)
 	if err := http.ListenAndServe(addr, srv.Routes()); err != nil {
 		log.Fatal(err)
 	}
