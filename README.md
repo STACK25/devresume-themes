@@ -1,8 +1,8 @@
-# devresume-theme
+# devresume-themes
 
-Themes, HTML templates, and bundled fonts for [devResume.io](https://devresume.io), a free, open-source "resume as code" tool for tech professionals.
+Themes, HTML templates, and bundled fonts for [devResume.io](https://devresume.io), a free "resume as code" tool for tech professionals.
 
-This repo is consumed by the main [devresume](https://github.com/STACK25/devresume) backend as a git submodule. You can also use it standalone to develop new themes or tweak fonts.
+These assets power the rendering on [devResume.io](https://devresume.io). This repository is standalone so anyone can develop new themes or tweak fonts and open a PR without needing access to the rest of the stack.
 
 ## Repository Layout
 
@@ -39,7 +39,7 @@ Two placeholders in every `template.html` get replaced before Go-template parsin
 - `{{FONT_CSS}}`: base64-inlined @font-face rules for the selected font, plus a `--font-resume` CSS variable.
 - `{{THEME_CSS}}`: the selected `themes/<variant>.css` inlined verbatim.
 
-The CLI and backend produce byte-identical output for these placeholders, so previews match production.
+The CLI in this repo produces byte-identical output for these placeholders to the production renderer, so previews match exactly what devResume.io ships.
 
 ## Licensing
 

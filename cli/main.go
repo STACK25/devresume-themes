@@ -31,9 +31,9 @@ func main() {
 
 	addr := fmt.Sprintf("localhost:%d", *port)
 	if *themeOverride != "" {
-		log.Printf("devresume-theme preview: http://%s  (yaml=%s, theme override=%s)", addr, *yamlPath, *themeOverride)
+		log.Printf("devresume-themes preview: http://%s  (yaml=%s, theme override=%s)", addr, *yamlPath, *themeOverride)
 	} else {
-		log.Printf("devresume-theme preview: http://%s  (yaml=%s, theme from yaml)", addr, *yamlPath)
+		log.Printf("devresume-themes preview: http://%s  (yaml=%s, theme from yaml)", addr, *yamlPath)
 	}
 	log.Printf("watching yaml, all template folders, and fonts/; edit any file to trigger reload")
 	if err := http.ListenAndServe(addr, srv.Routes()); err != nil {

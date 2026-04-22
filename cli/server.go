@@ -127,7 +127,7 @@ func (s *PreviewServer) handleIndex(w http.ResponseWriter, r *http.Request) {
 		log.Printf("render error: %v", err)
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
 		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, `<!DOCTYPE html><html><head><title>devresume-theme: error</title>
+		fmt.Fprintf(w, `<!DOCTYPE html><html><head><title>devresume-themes: error</title>
 <style>body{font:14px/1.5 ui-monospace,monospace;padding:2rem;color:#b91c1c}
 pre{background:#fef2f2;padding:1rem;border-radius:8px;white-space:pre-wrap}</style>
 </head><body><h1>Render error</h1><pre>%s</pre><script>%s</script></body></html>`,
