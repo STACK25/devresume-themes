@@ -3,20 +3,30 @@ package main
 import (
 	"flag"
 	"fmt"
-	"os"
+	"log"
+	"net/http"
 )
 
 func main() {
 	var (
 		yamlPath  = flag.String("yaml", "../_examples/sample.yaml", "Path to resume YAML file")
-		themeName = flag.String("theme", "classic-navy", "Theme in format template-variant (e.g. classic-dark)")
+		themeName = flag.String("theme", "classic-navy", "Theme in format template-variant")
 		port      = flag.Int("port", 7171, "HTTP port for preview server")
 		themesDir = flag.String("themes-dir", "..", "Directory containing template folders and fonts/")
 	)
 	flag.Parse()
 
-	fmt.Printf("devresume-themes CLI\n  yaml: %s\n  theme: %s\n  themes-dir: %s\n  port: %d\n",
-		*yamlPath, *themeName, *themesDir, *port)
+	fontCache, err := LoadFonts(FontsDir(*themesDir))
+	if err != nil {
+		log.Fatalf("load fonts: %v", err)
+	}
+	log.Printf("loaded %d font(s)", len(fontCache))
 
-	os.Exit(0)
+	srv := NewPreviewServer(*yamlPath, *themeName, *themesDir, fontCache)
+
+	addr := fmt.Sprintf("localhost:%d", *port)
+	log.Printf("devresume-themes preview: http://%s  (yaml=%s theme=%s)", addr, *yamlPath, *themeName)
+	if err := http.ListenAndServe(addr, srv.Routes()); err != nil {
+		log.Fatal(err)
+	}
 }
