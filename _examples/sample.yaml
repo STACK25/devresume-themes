@@ -1,69 +1,117 @@
-name: Alex Beispiel
+name: John Doe
 title: Senior Software Engineer
-profile_image: ""
-theme: classic-navy
-font: inter
+profile_image: https://i.pravatar.cc/150?img=12
 
 contact:
-  email: alex@example.com
-  location: Berlin, Germany
-  github: github.com/alexbeispiel
-  linkedin: linkedin.com/in/alexbeispiel
-  website: alex.dev
+  email: john@example.com
+  phone: +1 234 567 8900
+  location: San Francisco, CA
+  github: github.com/johndoe
+  linkedin: linkedin.com/in/johndoe
+  website: johndoe.dev
+  # xing: xing.com/profile/johndoe
+  # twitter: johndoe
+
+theme: classic-navy
+
+# Keep sections together on one page (default: false)
+# section_breaks: true
 
 sections:
   - type: text
     title: Summary
-    content: |
-      Backend-focused engineer with 8 years building scalable services in Go
-      and Python. Enjoys clean architecture, observability, and mentoring.
+    # Use > for flowing text (line breaks become spaces)
+    # Use | for text with preserved line breaks
+    content: >
+      Senior software engineer with 8+ years of experience
+      building scalable web applications. Passionate about
+      clean code, performance optimization, and developer
+      experience.
 
   - type: experience
     title: Experience
     items:
-      - company: TechCorp
+      - company: TechCorp Inc
         position: Senior Software Engineer
-        start: "2022"
+        start: "2021"
         end: "present"
         description: |
-          Lead engineer on the billing platform. Migrated legacy monolith
-          to event-driven microservices, reducing invoice latency by 70%.
-        technologies: [Go, PostgreSQL, Kafka, Kubernetes]
+          • Lead development of microservices architecture serving 1M+ users
+          • Mentored 5 junior developers and established code review processes
+          • Reduced deployment time by 70% through CI/CD pipeline optimization
+        technologies: [React, TypeScript, Node.js, PostgreSQL, AWS, Docker]
+
       - company: StartupXYZ
-        position: Software Engineer
+        position: Full-Stack Developer
         start: "2019"
-        end: "2022"
-        description: Built the core payments pipeline from scratch.
-        technologies: [Python, Django, Redis]
+        end: "2021"
+        description: |
+          • Built responsive web applications using modern JavaScript frameworks
+          • Collaborated with design team to implement pixel-perfect UIs
+          • Optimized application performance resulting in 50% faster load times
+        technologies: [Vue.js, Python, Django, MySQL, Redis]
+
+  - type: projects
+    title: Projects
+    items:
+      - name: devResume.io
+        description: |
+          • Resume builder for tech professionals using YAML
+          • Built with React, Go, and PocketBase
+          • Live preview and PDF export with professional templates
+        technologies: [React, TypeScript, Go, PocketBase, Docker]
+
+      - name: CloudSync Platform
+        description: |
+          • Real-time collaboration tool for remote teams
+          • Microservices architecture with Kubernetes deployment
+          • Handles 10K+ concurrent users
+        technologies: [Node.js, React, Kubernetes, Redis, PostgreSQL]
 
   - type: skills
     title: Skills
     groups:
-      - category: Languages
-        items: [Go, Python, TypeScript, SQL]
-      - category: Infrastructure
-        items: [Kubernetes, Docker, Terraform, AWS]
+      - category: Frontend
+        items: [React, Vue.js, TypeScript, JavaScript, HTML5, CSS3]
+      - category: Backend
+        items: [Node.js, Python, Java, PostgreSQL, MongoDB, Redis]
+      - category: DevOps
+        items: [AWS, Docker, Kubernetes, CI/CD, Terraform]
 
   - type: education
     title: Education
     items:
-      - institution: TU Berlin
-        degree: M.Sc.
+      - degree: Master of Science
         field: Computer Science
-        start: "2014"
+        institution: Stanford University
+        start: "2015"
         end: "2017"
+
+      - degree: Bachelor of Science
+        field: Software Engineering
+        institution: MIT
+        start: "2011"
+        end: "2015"
 
   - type: certifications
     title: Certifications
     items:
-      - name: AWS Certified Solutions Architect
+      - name: AWS Certified Solutions Architect - Professional
         issuer: Amazon Web Services
         date: "2023"
+        credential_id: AWS-PSA-12345
+
+      - name: Certified Kubernetes Administrator (CKA)
+        issuer: Cloud Native Computing Foundation
+        date: "2022"
+        credential_id: LF-CKA-67890
 
   - type: languages
     title: Languages
     languages:
-      - name: German
-        level: Native
       - name: English
-        level: Fluent
+        level: Native
+      - name: German
+        level: C1
+      - name: Spanish
+        level: B1
