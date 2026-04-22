@@ -13,6 +13,7 @@ contact:
   # twitter: johndoe
 
 theme: classic-navy
+font: jetbrains-mono
 
 # Keep sections together on one page (default: false)
 # section_breaks: true
